@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Миссия Колонизация Марса</h1>
+    <h4>И на Марсе будут яблони цвести!</h4>
+    <h2 align="center">Список профессий</h2>
+    {% if mod == "ol"%}
+        <ol>
+            {% for i in professions %}
+                <li><div>{{i}}<br></div>
+            {% endfor %}
+        </ol>
+    {% elif mod == "ul"%}
+        <ul>
+            {% for i in professions %}
+                <li><div>{{i}}<br></div>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Параметр указан неверно(ul или ol)</p>
+    {% endif %}
+</body>
+</html>
