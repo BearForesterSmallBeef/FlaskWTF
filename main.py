@@ -10,9 +10,10 @@ def main_menu():
         f'''
         <h1>Миссия Колонизация Марса</h1>
         <ol>
-        <li><a href="http:\\index">Index</a>
+        <li><a href="http:\\index\\123">Index</a>
         <li><a href="http:\\training\\Главный инженер">Training</a>
         <li><a href="http:\\list_prof\\ol">List of profs</a>
+        <li><a href="http:\\answer">Ответ</a>
         </ol>
         '''
 
@@ -51,6 +52,34 @@ def list_profs(mod):
         "mod": mod
     }
     return render_template('profs_list.html', **param)
+
+
+@app.route('/answer')
+@app.route('/auto_answer')
+def answering():
+    points = {
+        'surname': 'Фамилия',
+        'name': 'Имя',
+        'education': 'Образование',
+        'profession': 'Профессия',
+        'sex': 'Пол',
+        'motivation': 'Мотивация',
+        'ready': 'Готовы остаться на Марсе?'
+    }
+    answers = {
+        'surname': 'Watny',
+        'name': 'Mark',
+        'education': 'выше среднего',
+        'profession': 'штурман марсохода',
+        'sex': 'male',
+        'motivation': 'Всегда мечтал застрять на марсе',
+        'ready': 'True'
+    }
+    param = {
+        "points": points,
+        "answers": answers
+    }
+    return render_template('param.html', **param)
 
 
 if __name__ == '__main__':
