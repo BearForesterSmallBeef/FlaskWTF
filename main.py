@@ -1,7 +1,11 @@
-from flask import Flask, url_for, render_template
+from flask import Flask, url_for, render_template, redirect
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms.validators import DataRequired
 
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = '12345654321'
 
 
 @app.route('/')
@@ -14,6 +18,7 @@ def main_menu():
         <li><a href="http:\\training\\Главный инженер">Training</a>
         <li><a href="http:\\list_prof\\ol">List of profs</a>
         <li><a href="http:\\answer">Ответ</a>
+        <li><a href="http:\\double_defense">Двойнай проверка</a>
         </ol>
         '''
 
@@ -80,6 +85,28 @@ def answering():
         "answers": answers
     }
     return render_template('param.html', **param)
+
+
+class LoginForm(FlaskForm):
+    userID = StringField('ID астронавта', validators=[DataRequired()])
+    userpassword = PasswordField('Пароль астронавта', validators=[DataRequired()])
+    capitanID = StringField('ID капитана', validators=[DataRequired()])
+    capitanpassword = PasswordField('Пароль капитана', validators=[DataRequired()])
+    remember_me = BooleanField('Запомнить меня')
+    submit = SubmitField('Доступ')
+
+
+@app.route('/success')
+def success():
+    return """<h1>Доступ разрешен!</h1>"""
+
+
+@app.route('/double_defense', methods=['GET', 'POST'])
+def double_defense():
+    form = LoginForm()
+    if form.validate_on_submit():
+        return redirect('/success')
+    return render_template('double_defence.html', title='Запрос доступа', form=form)
 
 
 if __name__ == '__main__':
